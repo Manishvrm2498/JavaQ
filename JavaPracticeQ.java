@@ -1,8 +1,8 @@
+/*
 import java.net.Inet4Address;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
-/*
 
 ARRAYLIST QUESTIONS --
 1.Create ArrayList<String>, add 5 cities, print
@@ -747,6 +747,8 @@ public class CollectionFQ {
 
 
 
+
+
 /* PRIORITY QUESTION ---
 1. Create and Print PriorityQueue
 Write a Java program to create a priority queue, add some colors (strings) and print out the elements of the priority queue.
@@ -891,7 +893,7 @@ public class CollectionFQ {
 
 Write a Java program to compare two priority queues.
 Click me to see the solution
- */
+ 
 public class CollectionFQ {
     public static void main(String[] args) {
 
@@ -920,3 +922,7 @@ public class CollectionFQ {
 
     }
 }
+*/
+
+
+
