@@ -922,6 +922,427 @@ public class CollectionFQ {
 
     }
 }
+
+
+
+
+
+Interface and Abstract based Coding solution  -- 
+
+/*
+1.Default + Static Method Usage
+Create an interface Payment with:
+
+default method logTransaction()
+
+static method getSupportedCurrencies()
+Implement it in UPIPayment and show usage of both methods.
+
+
+import java.util.List;
+
+interface Payment{
+     void logTransaction(double amount);
+
+    static List<String> getSupportedCurrencies() {
+        return List.of("USD","INR","EUR","YUAN");
+    }
+}
+class UPIPayment implements Payment{
+
+    public void logTransaction(double amount){
+        System.out.println("UPI Transaction of " + amount + " successfully.");
+    }
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        UPIPayment payment = new UPIPayment();
+
+        payment.logTransaction(1000.0);
+
+        System.out.println("Supported currencies :" + Payment.getSupportedCurrencies());
+    }
+}
+
+
+
+2.Multiple Interface Inheritance
+Create interfaces:
+Walkable → walk()
+Swimmable → swim()
+Create class Amphibian implementing both and call both methods.
+
+interface Walkable{
+    void walk();
+}
+interface  Swimmable{
+    void swim();
+}
+class Amphibian implements Walkable,Swimmable{
+
+    public void walk(){
+        System.out.println("Amphibian can walk.");
+    }
+    public void swim(){
+        System.out.println("Amphibian can swim.");
+    }
+}
+public class CollectionQ {
+    public static void main(String[] args){
+        Amphibian turtle = new Amphibian();
+
+        turtle.walk();
+        turtle.swim();
+    }
+}
+
+
+
+
+
+3.Interface With Constant Fields
+Create interface HttpStatus with constants (e.g., SUCCESS = 200).
+Write a method that checks if a given code matches one of the constants.
+
+interface HttpStatus{
+    int success = 400;
+}
+
+class HttpStatusChecker implements HttpStatus{
+
+    public void checkStatus(int code){
+        if (code == success){
+            System.out.println("Status " + code + " : Success");
+        }else {
+            System.out.println("Status " + code + " : Not found");
+        }
+    }
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        HttpStatusChecker status = new HttpStatusChecker();
+
+        status.checkStatus(400);
+        status.checkStatus(300);
+    }
+}
+
+
+
+
+
+4.Interface Method Conflict Resolution
+Create interfaces:
+A → default greet()
+B → default greet()
+Create class C implementing both and resolve the conflict by overriding greet().
+
+interface A{
+    default void greet(){
+        System.out.println("This message from A interface method.");
+    }
+}
+interface B{
+    default void greet(){
+        System.out.println("This message from B interface B method.");
+    }
+}
+
+class C implements A,B{
+
+    public void greet(){
+
+    // Using super to call parent interface to resolve the conflict by overriding.
+
+        A.super.greet();
+        B.super.greet();
+
+        System.out.println("This message from C which implement greet() method from A interface because C class implement A interface method first.");
+    }
+
+}
+public class CollectionQ {
+    public static void main(String[] args){
+        C c = new C();
+        c.greet();
+
+    }
+}
+
+
+
+5.Functional Interface + Lambda
+Create a functional interface Calculator with int compute(int a, int b).
+Use lambdas for:
+
+addition
+
+multiplication
+Pass them to a method performOperation()
+
+interface Calculator{
+    int compute(int a,int b);
+
+}
+class Operation{
+
+    public void performOperation(int a,int b, Calculator calc){
+        int result = calc.compute(a,b);
+        System.out.println("Result : " + result);
+    }
+
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        Operation operation = new Operation();
+
+        Calculator addition = (a, b) -> a + b ;
+
+        Calculator multiplication = (a,b) -> a * b ;
+
+        operation.performOperation(12,10,addition);
+        operation.performOperation(12,10,multiplication);
+
+    }
+}
+
+
+
+
+ABSTRACT CLASS -- 
+
+1.Partially Implemented Template
+Create an abstract class FileProcessor with:
+concrete readFile()
+abstract processContent()
+Extend to LogFileProcessor and run the full flow.
+
+
+abstract class FileProcessor{
+
+    void readFile(String fileName){
+        System.out.println("File reading..." + fileName);
+    }
+    abstract void processContent();
+}
+class LogFileProcessor extends FileProcessor{
+
+    public void processContent(){
+        System.out.println("File Content processing...");
+    }
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        LogFileProcessor fp = new LogFileProcessor();
+
+        fp.readFile("Name.txt");
+        fp.processContent();
+
+    }
+}
+
+
+
+
+2.Constructor in Abstract Class
+Create abstract class Vehicle with constructor setting model and year.
+Extend Car and print values to verify constructor chaining.
+
+
+abstract class Vehicle{
+    String model;
+    int year;
+
+    public Vehicle(String model, int year) {
+        this.model = model;
+        this.year = year;
+    }
+
+}
+class Car extends Vehicle{
+
+    public Car(String model,int year){
+        super(model,year);
+    }
+
+
+    public void printDetails(){
+        System.out.println("Model " + model + "\nYear :" + year );
+    }
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        Car car = new Car("SUV",2020);
+
+        car.printDetails();
+    }
+}
+
+
+
+
+3.Abstract + Concrete Fields
+Create abstract class Shape with:
+concrete field: type = "Shape"
+abstract method: area()
+Implement Circle and Rectangle, then compute areas in a list.
+
+
+abstract class Shape{
+
+    String type = "shape";
+
+    abstract double area();
+}
+class Circle extends Shape{
+    double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+        this.type = "Circle";
+    }
+
+    public double area(){
+        return Math.PI * radius * radius;
+    }
+}
+class Rectangle extends Shape {
+    double length;
+    double breadth;
+
+    public Rectangle(double length, double breadth) {
+        this.length = length;
+        this.breadth = breadth;
+        this.type = "Rectangle";
+    }
+
+    public double area(){
+        return length * breadth ;
+    }
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        List<Shape> shape = new ArrayList<>();
+
+        shape.add(new Circle(12));
+        shape.add(new Rectangle(12,10));
+
+        for (Shape s : shape){
+            System.out.println(s.type + " Area :" + s.area());
+        }
+    }
+}
+
+
+
+4.Abstract Class With Final Method
+Create abstract class Document with:
+
+final printHeader()
+
+abstract generateContent()
+Extend PDFDocument and show that printHeader() cannot be overridden.
+
+
+
+abstract class Document{
+    final void printHeader() {
+        System.out.println("Unknown Document");
+    }
+    abstract void generateContent();
+}
+
+class PDFDocument extends Document{
+
+
+//   ( printHeader is not override because it declared as a final method in the above abstract class.)
+//    public void printHeader(){
+//    }
+
+
+    public void generateContent(){
+        System.out.println("Generating Document Contents...");
+    }
+
+
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        PDFDocument d = new PDFDocument();
+
+        d.printHeader();
+        d.generateContent();
+
+    }
+}
+
+
+
+5.Abstract Class + Interface Together
+Create:
+
+interface Drivable → drive()
+
+abstract class Machine → start() + abstract run()
+Create Car that extends Machine and implements Drivable.
+Call start(), run(), and drive().
+
+
+interface Drivable{
+    
+    void drive();
+}
+
+abstract class Machine{
+   
+    void start(){
+        
+        System.out.println("Machine start...");
+    }
+    
+    abstract void run();
+}
+
+class Car extends Machine implements Drivable{
+
+    public void start(){
+        System.out.println("Rohit starts a car.");
+    }
+    public void run(){
+        System.out.println("He run car run at the uniform speed");
+    }
+    public void drive(){
+        System.out.println("He driving a car.");
+    }
+}
+
+public class CollectionQ {
+    public static void main(String[] args){
+
+        Car car = new Car();
+
+        car.start();
+        car.drive();
+        car.run();
+    }
+}
+
+ */
+
 */
 
 
